@@ -6,15 +6,15 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    # URL pattern for the UserListView
-    url(regex=r'^$', view=views.UserListView.as_view(), name='list'),
+    # URL pattern for the SkillOverView
+    url(regex=r'^$', view=views.SkillOverView.as_view(), name='overview'),
 
-    # URL pattern for the UserRedirectView
-    url(regex=r'^~redirect/$', view=views.UserRedirectView.as_view(), name='redirect'),
+    # URL pattern for the SkillProgressView
+    url(regex=r'^progress/$', view=views.SkillProgressView.as_view(), name='progress'),
 
-    # URL pattern for the UserDetailView
-    url(regex=r'^(?P<username>[\w.@+-]+)/$', view=views.UserDetailView.as_view(), name='detail'),
+    # URL pattern for the SkillSetupView
+    url(regex=r'^setup/$', view=views.SkillSetupView.as_view(), name='setup'),
 
-    # URL pattern for the UserUpdateView
-    url(regex=r'^~update/$', view=views.UserUpdateView.as_view(), name='update'),
+    # URL pattern for the SkillTodoView
+    url(regex=r'^todo/$', view=views.SkillTodoView.as_view(), name='todo'),
 ]
