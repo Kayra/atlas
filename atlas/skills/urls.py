@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     # URL pattern for the SkillProgressView
-    url(regex=r'^$', view=views.SkillProgressView.as_view(), name='progress'),
+    url(regex=r'^$', 'views.skillProgressView', name='progress'),
 
     # URL pattern for the SkillOverview
     url(regex=r'^overview/$', view=views.SkillOverview.as_view(), name='overview'),

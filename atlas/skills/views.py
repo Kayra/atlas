@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from django.shortcuts import render
+
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
 
 from braces.views import LoginRequiredMixin
@@ -23,3 +25,8 @@ class SkillSetupView(LoginRequiredMixin, CreateView):
 
 class SkillTodoView(LoginRequiredMixin, ListView):
     pass
+
+
+def skillProgressView(request):
+    #check my view yo
+    return render(request, 'skill_progress.html')
