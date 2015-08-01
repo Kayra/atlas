@@ -2,6 +2,48 @@
 
 {% block content %}
 
+FOR SKILL IN SKILLS
 
+SKILL NAME
+<table>
+    FOR TASK IN SKILL
+    <tr>
+        <td>TASK NAME</td>
+        <td>COMPLETION TIME</td>
+    </tr>
+    ENDFOR
+    <tr>
+        <td>TASK NAME FORM ENTRY</td>
+        <td>COMPLETION TIME FORM ENTRY</td>
+    </tr>
+    Plus sign symbol to add more rows
+</table>
+ENDFOR
+
+<p>Add a new skill</p>
+
+ADD NEW SKILL FORM
+
+<p>Availability</p>
+<table>
+    <tr>
+        <td>Mon</td>
+        <td>Tues</td>
+        <td>Weds</td>
+        <td>Thurs</td>
+        <td>Fri</td>
+        <td>Sat</td>
+        <td>Sun</td>
+    </tr>
+    <tr>
+        <td>Mon.time</td>
+        <td>Tues.time</td>
+        <td>Weds.time</td>
+        <td>Thurs.time</td>
+        <td>Fri.time</td>
+        <td>Sat.time</td>
+        <td>Sun.time</td>
+    </tr>
+</table>
 
 {% endblock %}
