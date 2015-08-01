@@ -15,6 +15,6 @@ urlpatterns = [
     # URL pattern for the SkillSetupView
     url(r'^setup/$', views.skillSetupView, name='setup'),
 
-    # URL pattern for the SkillTodoView
-    url(regex=r'^todo/$', view=views.SkillTodoView.as_view(), name='todo'),
+    # URL pattern for the SkillListView
+    url(r'^list/$', views.skillListView, name='list'),
 ]
