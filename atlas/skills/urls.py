@@ -6,11 +6,11 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    # URL pattern for the SkillOverView
-    url(regex=r'^$', view=views.SkillOverView.as_view(), name='overview'),
-
     # URL pattern for the SkillProgressView
-    url(regex=r'^progress/$', view=views.SkillProgressView.as_view(), name='progress'),
+    url(regex=r'^$', view=views.SkillProgressView.as_view(), name='progress'),
+
+    # URL pattern for the SkillOverview
+    url(regex=r'^overview/$', view=views.SkillOverview.as_view(), name='overview'),
 
     # URL pattern for the SkillSetupView
     url(regex=r'^setup/$', view=views.SkillSetupView.as_view(), name='setup'),
