@@ -31,4 +31,6 @@ def skillProgressView(request):
     #check my view yo
     return render(request, 'skills/skill_progress.html')
 
-
+def skillOverview(request):
+    #check my view yo
+    return render(request, 'skills/skill_overview.html')

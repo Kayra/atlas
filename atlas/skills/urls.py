@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^$', views.skillProgressView, name='progress'),
 
     # URL pattern for the SkillOverview
-    url(regex=r'^overview/$', view=views.SkillOverview.as_view(), name='overview'),
+    url(r'^overview/$', views.skillOverview, name='overview'),
 
     # URL pattern for the SkillSetupView
     url(regex=r'^setup/$', view=views.SkillSetupView.as_view(), name='setup'),
