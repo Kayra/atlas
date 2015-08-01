@@ -29,4 +29,6 @@ class SkillTodoView(LoginRequiredMixin, ListView):
 
 def skillProgressView(request):
     #check my view yo
-    return render(request, 'skill_progress.html')
+    return render(request, 'skills/skill_progress.html')
+
+
