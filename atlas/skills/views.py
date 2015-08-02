@@ -38,12 +38,6 @@ def skillSetupView(request):
 
     if request.user.is_authenticated():
         currentUser = request.user
-        # try:
-        #     skill = Skill.objects.get(user_id=currentUser.id)[0]
-        #     return redirect('overview')
-        # except IndexError:
-        #     return render(request, 'skills/skill_setup.html')
-
         if Skill.objects.filter(user_id=currentUser.id)[0]:
             return redirect('skills:overview')
         else:
