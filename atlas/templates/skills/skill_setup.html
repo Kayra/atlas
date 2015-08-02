@@ -3,7 +3,12 @@
 {% block content %}
 
 <p>Please add the first skill you would like to learn</p>
-{# SKILL NAME GOES HERE #}
+<form method='POST' action=''>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+</form>
+
 
 <p>Now split this into smaller tasks</p>
 
@@ -13,5 +18,8 @@
 <p>Finally, specify how much time you can devote to this skill each day</p>
 
 {# LIST THE DAYS HERE SO HOURS AND MINUTES CAN BE ENTERED #}
+
+
+
 
 {% endblock %}

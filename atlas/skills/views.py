@@ -3,9 +3,8 @@ from __future__ import absolute_import, unicode_literals
 
 from django.shortcuts import render, redirect
 
-# from .forms import UserForm
 from .models import Skill, Task, Days
-
+from .forms import SkillForm
 
 def skillProgressView(request):
 
@@ -37,11 +36,25 @@ def skillOverview(request):
 def skillSetupView(request):
 
     if request.user.is_authenticated():
+
         currentUser = request.user
-        if Skill.objects.filter(user_id=currentUser.id)[0]:
+
+        try:
+            # Check if the user already has a skill
+            Skill.objects.filter(user_id=currentUser.id)[0]
             return redirect('skills:overview')
-        else:
-            return render(request, 'skills/skill_setup.html')
+
+        except IndexError:
+            if request.method == 'POST':
+                form = SkillForm(data=request.POST)
+                if form.is_valid():
+                    skill = form.save(commit=False)
+                    skill.user = request.user
+                    skill.save()
+                    return redirect('skills:overview')
+            else:
+                form = SkillForm
+            return render(request, 'skills/skill_setup.html', {'form': form})
 
     else:
         return redirect('account_login')
