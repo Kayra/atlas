@@ -32,12 +32,23 @@ def skillOverview(request):
         return redirect('account_login')
 
 
+# Save one skill for user
+# Save multiple tasks for user
 def skillSetupView(request):
 
     if request.user.is_authenticated():
-        # Save one skill for user
-        # Save multiple tasks for user
-        return render(request, 'skills/skill_setup.html')
+        currentUser = request.user
+        # try:
+        #     skill = Skill.objects.get(user_id=currentUser.id)[0]
+        #     return redirect('overview')
+        # except IndexError:
+        #     return render(request, 'skills/skill_setup.html')
+
+        if Skill.objects.filter(user_id=currentUser.id)[0]:
+            print 'hit'
+            return redirect('overview')
+        else:
+            return render(request, 'skills/skill_setup.html')
 
     else:
         return redirect('account_login')
