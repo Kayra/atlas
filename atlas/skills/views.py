@@ -45,8 +45,7 @@ def skillSetupView(request):
         #     return render(request, 'skills/skill_setup.html')
 
         if Skill.objects.filter(user_id=currentUser.id)[0]:
-            print 'hit'
-            return redirect('overview')
+            return redirect('skills:overview')
         else:
             return render(request, 'skills/skill_setup.html')
 
