@@ -18,8 +18,11 @@ urlpatterns = [
     url(r'^users/', include("atlas.users.urls", namespace="users")),
     url(r'^accounts/', include('allauth.urls')),
 
-    # Your stuff: custom urls includes go here
+    # Skills application
     url(r'^skills/', include("atlas.skills.urls", namespace="skills")),
+
+    # Rest Framework
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
