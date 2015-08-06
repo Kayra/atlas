@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from .models import Skill, Task, Days
 from .forms import SkillForm
 
+
 def skillProgressView(request):
 
     if request.user.is_authenticated():
