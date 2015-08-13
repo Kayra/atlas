@@ -93,7 +93,7 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
-def createSkill(request):
+def skillCreate(request):
 
     if request.method == 'POST':
         data = JSONParser().parse(request)
