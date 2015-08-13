@@ -82,14 +82,15 @@ def skillListView(request):
 # API #########################################################################
 
 class JSONResponse(HttpResponse):
+
     """
     An HttpResponse that renders its content into JSON.
     """
+
     def __init__(self, data, **kwargs):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
-
 
 
 def createSkill(request):
@@ -106,8 +107,33 @@ def createSkill(request):
         return JSONResponse(serializer.errors, status=400)
 
 
+def skillDetail(request, pk):
 
+    """
+    Retrieve, update or delete a skill.
+    """
 
+    try:
+        skill = Skill.objects.get(pk=pk)
+    except Skill.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = SkillSerializer(skill)
+        return JSONResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = SkillSerializer(skill, data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data)
+        return JSONResponse(serializer.errors, status=400)
+
+    elif request.method == 'DELETE':
+        skill.delete()
+        return HttpResponse(status=204)
 
 
 
