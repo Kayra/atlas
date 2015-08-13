@@ -89,3 +89,26 @@ class JSONResponse(HttpResponse):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
+
+
+
+def createSkill(request):
+
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = SkillSerializer(data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data, status=201)
+
+    else:
+        return JSONResponse(serializer.errors, status=400)
+
+
+
+
+
+
+
+
