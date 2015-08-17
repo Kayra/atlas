@@ -6,7 +6,7 @@ from .models import Skill, Task, Days
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
-        fields = ('name',)
+        fields = ('name', 'user')
 
 
 class TaskSerializer(serializers.ModelSerializer):

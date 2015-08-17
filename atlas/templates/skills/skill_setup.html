@@ -3,7 +3,7 @@
 {% block content %}
 
 <p>Please add the first skill you would like to learn</p>
-<form method='POST' action=''>
+<form method='POST' action='' class='skill'>
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit">

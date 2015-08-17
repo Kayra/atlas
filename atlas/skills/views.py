@@ -11,7 +11,7 @@ from .serializers import SkillSerializer, TaskSerializer, DaysSerializer
 
 from .models import Skill, Task, Days
 from .forms import SkillForm
-
+import sys
 
 def skillProgressView(request):
 
@@ -53,11 +53,11 @@ def skillSetupView(request):
 
         except IndexError:
             if request.method == 'POST':
-                form = SkillForm(data=request.POST)
-                if form.is_valid():
-                    skill = form.save(commit=False)
-                    skill.user = request.user
-                    skill.save()
+                # form = SkillForm(data=request.POST)
+                # if form.is_valid():
+                #     skill = form.save(commit=False)
+                #     skill.user = request.user
+                #     skill.save()
                     return redirect('skills:overview')
             else:
                 form = SkillForm
@@ -84,15 +84,16 @@ def skillListView(request):
 @api_view(['POST'])
 def skillCreate(request):
 
-    if request.method == 'POST':
-        serializer = SkillSerializer(data=request.data)
+    print >>sys.stderr, "words"
+    print request.data
+    serializer = SkillSerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
