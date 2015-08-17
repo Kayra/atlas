@@ -4,10 +4,12 @@
 $( "form.skill" ).on( "submit", function( event ) {
 
   event.preventDefault();
-  var data = $( this ).serialize()
+  var data = $( this ).serializeObject();
+  var json = JSON.stringify(data);
   var csrftoken = getCookie('csrftoken');
 
   $.ajaxSetup({
+    contentType: "application/json; charset=utf-8",
     beforeSend: function(xhr, settings) {
         if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
             // Send the token to same-origin, relative URLs only.
@@ -18,15 +20,14 @@ $( "form.skill" ).on( "submit", function( event ) {
     }
 });
 
-  $.post("/skills/api/skill_create/").success(function(data){
-    console.log(data);
+  $.post("/skills/api/skill_create/", json).success(function(json){
+    console.log(json);
   });
-
-  console.log( $( this ).serialize() );
 
 });
 
 
+/* Utility functions */
 
 function getCookie(name) {
     var cookieValue = null;
@@ -62,3 +63,20 @@ function sameOrigin(url) {
         // or any other URL that isn't scheme relative or absolute i.e relative.
         !(/^(\/\/|http:|https:).*/.test(url));
 }
+
+$.fn.serializeObject = function()
+{
+   var o = {};
+   var a = this.serializeArray();
+   $.each(a, function() {
+       if (o[this.name]) {
+           if (!o[this.name].push) {
+               o[this.name] = [o[this.name]];
+           }
+           o[this.name].push(this.value || '');
+       } else {
+           o[this.name] = this.value || '';
+       }
+   });
+   return o;
+};

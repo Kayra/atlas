@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
 
 from .serializers import SkillSerializer, TaskSerializer, DaysSerializer
 
@@ -84,16 +85,14 @@ def skillListView(request):
 @api_view(['POST'])
 def skillCreate(request):
 
-    print >>sys.stderr, "words"
-    print request.data
-    serializer = SkillSerializer(data=request.data)
+    serializer = SkillSerializer(data=request.data, partial=True)
 
     if serializer.is_valid():
         serializer.save(user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     else:
-        Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
