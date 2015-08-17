@@ -3,7 +3,6 @@
 // Create a skill from the skill form
 $( "form.skill" ).on( "submit", function( event ) {
 
-  event.preventDefault();
   var data = $( this ).serializeObject();
   var json = JSON.stringify(data);
   var csrftoken = getCookie('csrftoken');
