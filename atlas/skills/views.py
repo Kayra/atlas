@@ -6,13 +6,12 @@ from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.parsers import JSONParser
 
 from .serializers import SkillSerializer, TaskSerializer, DaysSerializer
 
 from .models import Skill, Task, Days
 from .forms import SkillForm
-import sys
+
 
 def skillProgressView(request):
 
@@ -43,6 +42,10 @@ def skillOverview(request):
 # Save multiple tasks for user
 def skillSetupView(request):
 
+    """
+    Save one skill, and multiple tasks for one user
+    """
+
     if request.user.is_authenticated():
 
         currentUser = request.user
@@ -54,11 +57,6 @@ def skillSetupView(request):
 
         except IndexError:
             if request.method == 'POST':
-                # form = SkillForm(data=request.POST)
-                # if form.is_valid():
-                #     skill = form.save(commit=False)
-                #     skill.user = request.user
-                #     skill.save()
                     return redirect('skills:overview')
             else:
                 form = SkillForm

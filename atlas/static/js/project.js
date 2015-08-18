@@ -19,10 +19,9 @@ $( "form.skill" ).on( "submit", function( event ) {
     }
 });
 
-  $.post("/skills/api/skill_create/", json).success(function(json){
+$.post("/skills/api/skill_create/", json).success(function(json){
     console.log(json);
   });
-
 });
 
 
