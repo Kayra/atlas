@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -13,69 +14,54 @@ from .models import Skill, Task, Days
 from .forms import SkillForm
 
 
+@login_required
 def skillProgressView(request):
 
-    if request.user.is_authenticated():
-        # Pull all tasks for user
-        # Pull all skills for user
-        # Run progress utility methods
-        # Return object and pass it to the template to be displayed
-        return render(request, 'skills/skill_progress.html')
-
-    else:
-        return redirect('account_login')
+    # Pull all tasks for user
+    # Pull all skills for user
+    # Run progress utility methods
+    # Return object and pass it to the template to be displayed
+    return render(request, 'skills/skill_progress.html')
 
 
+@login_required
 def skillOverview(request):
 
-    if request.user.is_authenticated():
-        # Pull all tasks for user
-        # Pull all skills for user
-        # Pass them to the template to be displayed
-        return render(request, 'skills/skill_overview.html')
-
-    else:
-        return redirect('account_login')
+    # Pull all tasks for user
+    # Pull all skills for user
+    # Pass them to the template to be displayed
+    return render(request, 'skills/skill_overview.html')
 
 
-# Save one skill for user
-# Save multiple tasks for user
+@login_required
 def skillSetupView(request):
 
     """
     Save one skill, and multiple tasks for one user
     """
 
-    if request.user.is_authenticated():
+    currentUser = request.user
 
-        currentUser = request.user
+    try:
+        # Check if the user already has a skill
+        Skill.objects.filter(user_id=currentUser.id)[0]
+        return redirect('skills:overview')
 
-        try:
-            # Check if the user already has a skill
-            Skill.objects.filter(user_id=currentUser.id)[0]
-            return redirect('skills:overview')
-
-        except IndexError:
-            if request.method == 'POST':
-                    return redirect('skills:overview')
-            else:
-                form = SkillForm
-            return render(request, 'skills/skill_setup.html', {'form': form})
-
-    else:
-        return redirect('account_login')
+    except IndexError:
+        if request.method == 'POST':
+                return redirect('skills:overview')
+        else:
+            form = SkillForm
+        return render(request, 'skills/skill_setup.html', {'form': form})
 
 
+@login_required
 def skillListView(request):
 
-    if request.user.is_authenticated():
-        # Pull all tasks for user
-        # Run list utility methods
-        # Return dictionary containing tasks and times to be displayed
-        return render(request, 'skills/skill_list.html')
-
-    else:
-        return redirect('account_login')
+    # Pull all tasks for user
+    # Run list utility methods
+    # Return dictionary containing tasks and times to be displayed
+    return render(request, 'skills/skill_list.html')
 
 
 # API #########################################################################
