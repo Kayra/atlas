@@ -1,7 +1,9 @@
-/* Project specific Javascript goes here. */
+
+
+
 
 // Create a skill from the skill form
-$( "form.skill" ).on( "submit", function( event ) {
+$( "form.setup" ).on( "submit", function( event ) {
 
   var data = $( this ).serializeObject();
   var json = JSON.stringify(data);

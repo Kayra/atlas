@@ -12,10 +12,10 @@ class SkillSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ('name', 'completion_time',)
+        fields = ('name', 'completion_time', 'skill')
 
 
 class DaysSerializer(serializers.ModelSerializer):
     class Meta:
         model = Days
-        fields = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday',)
+        fields = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'user')

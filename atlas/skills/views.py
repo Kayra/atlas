@@ -49,10 +49,8 @@ def skillSetupView(request):
 
     except IndexError:
         if request.method == 'POST':
-                return redirect('skills:overview')
-        else:
-            form = SkillForm
-        return render(request, 'skills/skill_setup.html', {'form': form})
+            return redirect('skills:overview')
+        return render(request, 'skills/skill_setup.html')
 
 
 @login_required

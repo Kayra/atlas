@@ -2,24 +2,73 @@
 
 {% block content %}
 
-<p>Please add the first skill you would like to learn</p>
-<form method='POST' action='' class='skill'>
+
+<form method='POST' action='' class="setup">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit">
+
+    <fieldset>
+        <legend>Please add the first skill you would like to learn</legend>
+
+        <label for="skill">Skill name:</label>
+        <input id="skill" maxlength="255" name="name" type="text">
+    </fieldset>
+
+    <fieldset>
+        <legend>Now split this into smaller tasks, with estimated times of completion for each</legend>
+
+        <p>
+        <label for="task_name_1">Task name:</label>
+        <input id="task_name_1" maxlength="255" name="name" type="text">
+
+        <label for="task_time_1">Completion time:</label>
+        <input id="task_time_1" name="completion_time" type="time">
+        </p>
+
+        <p>
+        <label for="task_name_2">Task name:</label>
+        <input id="task_name_2" maxlength="255" name="name" type="text">
+
+        <label for="task_time_2">Completion time:</label>
+        <input id="task_name_2" name="completion_time" type="time">
+        </p>
+
+        <p>
+        <label for="task_name_3">Task name:</label>
+        <input id="task_name_3" maxlength="255" name="name" type="text">
+
+        <label for="task_time_3">Completion time:</label>
+        <input id="task_name_3" name="completion_time" type="time">
+        </p>
+    </fieldset>
+
+    <fieldset>
+        <legend>Finally, specify how much time you can devote to this skill each day</legend>
+
+        <label for="day_1">Monday:</label>
+        <input id="day_1" name="monday" type="time">
+
+        <label for="day_2">Tuesday:</label>
+        <input id="day_2" name="tuesday" type="time">
+
+        <label for="day_3">Wednesday:</label>
+        <input id="day_3" name="wednesday" type="time">
+
+        <label for="day_4">Thursday:</label>
+        <input id="day_4" name="thursday" type="time">
+
+        <label for="day_5">Friday:</label>
+        <input id="day_5" name="friday" type="time">
+
+        <label for="day_6">Saturday:</label>
+        <input id="day_6" name="saturday" type="time">
+
+        <label for="day_7">Sunday:</label>
+        <input id="day_7" name="sunday" type="time">
+
+    </fieldset>
+
+    <input type="submit" text="Continue">
+
 </form>
-
-
-<p>Now split this into smaller tasks</p>
-
-{# TASK NAME GOES HERE #}
-{# COMPLETION TIME GOES HERE #}
-
-<p>Finally, specify how much time you can devote to this skill each day</p>
-
-{# LIST THE DAYS HERE SO HOURS AND MINUTES CAN BE ENTERED #}
-
-
-
 
 {% endblock %}
