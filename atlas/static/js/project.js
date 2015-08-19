@@ -93,7 +93,9 @@ $( "form.setup" ).on( "submit", function( event ) {
   });
 
   json = JSON.stringify(dayObj);
-  console.log(json);
+  $.post("/skills/api/days_create/", json).success(function(json){
+    console.log(json);
+  });
 
 });
 

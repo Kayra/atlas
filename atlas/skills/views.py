@@ -147,3 +147,16 @@ def taskDetail(request, pk):
     elif request.method == 'DELETE':
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['POST'])
+def daysCreate(request):
+
+    serializer = DaysSerializer(data=request.data, partial=True)
+
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
