@@ -29,4 +29,6 @@ urlpatterns = [
     # URL pattern to retrieve, update or delete a skill
     url(r'^api/skill_detail/(?P<pk>[0-9]+)/$', views.skillDetail, name='skill_detail'),
 
+    # URL pattern to create a skill
+    url(r'^api/task_create/$', views.taskCreate, name='task_create'),
 ]

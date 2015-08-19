@@ -20,8 +20,8 @@ class Task(models.Model):
 
     name                = models.CharField("Task name", max_length=255)
     completion_time     = models.TimeField()
-    times_listed        = models.IntegerField()
-    times_completed     = models.IntegerField()
+    times_listed        = models.IntegerField(default=0)
+    times_completed     = models.IntegerField(default=0)
 
     skill               = models.ForeignKey(Skill)
 

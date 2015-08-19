@@ -52,12 +52,14 @@ $( "form.setup" ).on( "submit", function( event ) {
 
         skill = value;
 
-        var jsonObj = new Object();
+        var jsonObj = {};
         jsonObj[name] = value;
 
         json = JSON.stringify(jsonObj);
 
-        console.log(json);
+        $.post("/skills/api/skill_create/", json).success(function(json){
+          console.log(json);
+        });
 
     } else if ($( this ).attr("id") && $( this ).attr("id").indexOf("day") != -1) {
 
@@ -71,7 +73,7 @@ $( "form.setup" ).on( "submit", function( event ) {
 
   $( this ).find("p").each(function(){
 
-    var jsonObj = new Object();
+    var jsonObj = {};
 
     $( this ).find(':input').each(function(){
 
@@ -84,7 +86,9 @@ $( "form.setup" ).on( "submit", function( event ) {
 
     jsonObj['skill'] = skill;
     json = JSON.stringify(jsonObj);
-    console.log(json);
+    $.post("/skills/api/task_create/", json).success(function(json){
+      console.log(json);
+    });
 
   });
 
