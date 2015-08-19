@@ -1,26 +1,4 @@
-// Create a skill from the skill form
-// $( "form.setup" ).on( "submit", function( event ) {
-
-//   var data = $( this ).serializeObject();
-//   var json = JSON.stringify(data);
-//   var csrftoken = getCookie('csrftoken');
-
-//   $.ajaxSetup({
-//     contentType: "application/json; charset=utf-8",
-//     beforeSend: function(xhr, settings) {
-//         if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
-//             // Send the token to same-origin, relative URLs only.
-//             // Send the token only if the method warrants CSRF protection
-//             // Using the CSRFToken value acquired earlier
-//             xhr.setRequestHeader("X-CSRFToken", csrftoken);
-//         }
-//     }
-// });
-
-// $.post("/skills/api/skill_create/", json).success(function(json){
-//     console.log(json);
-//   });
-// });
+/* Loop through set up form and send the data to appropirate apis */
 
 var dayObj = new Object();
 
@@ -44,8 +22,16 @@ $( "form.setup" ).on( "submit", function( event ) {
 
   var skill;
 
+  var hasId = function(element) {
+    return !!$( element ).attr("id");
+  };
+
+  var hasType = function(element, type) {
+    return $( element ).attr("id").indexOf(type) != -1;
+  }
+
   $( this ).find(':input').each(function(){
-    if ($( this ).attr("id") && $( this ).attr("id").indexOf("skill") != -1) {
+    if (hasId(this) && hasType(this, "skill")) {
 
         name = $( this ).attr("name");
         value = $( this ).val();
@@ -61,7 +47,7 @@ $( "form.setup" ).on( "submit", function( event ) {
           console.log(json);
         });
 
-    } else if ($( this ).attr("id") && $( this ).attr("id").indexOf("day") != -1) {
+    } else if (hasId(this) && hasType(this, "day")) {
 
         var name = $( this ).attr("name");
         var value = $( this ).val();
@@ -77,11 +63,14 @@ $( "form.setup" ).on( "submit", function( event ) {
 
     $( this ).find(':input').each(function(){
 
-      name = $( this ).attr("name");
-      value = $( this ).val();
+      if (hasId(this) && hasType(this, "task")) {
 
-      jsonObj[name] = value;
+        name = $( this ).attr("name");
+        value = $( this ).val();
 
+        jsonObj[name] = value;
+
+      }
     });
 
     jsonObj['skill'] = skill;
@@ -102,6 +91,7 @@ $( "form.setup" ).on( "submit", function( event ) {
 
 
 /* Utility functions */
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
