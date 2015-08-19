@@ -1,34 +1,101 @@
-
-
-
-
 // Create a skill from the skill form
+// $( "form.setup" ).on( "submit", function( event ) {
+
+//   var data = $( this ).serializeObject();
+//   var json = JSON.stringify(data);
+//   var csrftoken = getCookie('csrftoken');
+
+//   $.ajaxSetup({
+//     contentType: "application/json; charset=utf-8",
+//     beforeSend: function(xhr, settings) {
+//         if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+//             // Send the token to same-origin, relative URLs only.
+//             // Send the token only if the method warrants CSRF protection
+//             // Using the CSRFToken value acquired earlier
+//             xhr.setRequestHeader("X-CSRFToken", csrftoken);
+//         }
+//     }
+// });
+
+// $.post("/skills/api/skill_create/", json).success(function(json){
+//     console.log(json);
+//   });
+// });
+
+var dayObj = new Object();
+
 $( "form.setup" ).on( "submit", function( event ) {
 
-  var data = $( this ).serializeObject();
-  var json = JSON.stringify(data);
+  event.preventDefault();
+
   var csrftoken = getCookie('csrftoken');
 
   $.ajaxSetup({
-    contentType: "application/json; charset=utf-8",
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
-            // Send the token to same-origin, relative URLs only.
-            // Send the token only if the method warrants CSRF protection
-            // Using the CSRFToken value acquired earlier
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
+      contentType: "application/json; charset=utf-8",
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+              // Send the token to same-origin, relative URLs only.
+              // Send the token only if the method warrants CSRF protection
+              // Using the CSRFToken value acquired earlier
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+  });
+
+  var skill;
+
+  $( this ).find(':input').each(function(){
+    if ($( this ).attr("id") && $( this ).attr("id").indexOf("skill") != -1) {
+
+        name = $( this ).attr("name");
+        value = $( this ).val();
+
+        skill = value;
+
+        var jsonObj = new Object();
+        jsonObj[name] = value;
+
+        json = JSON.stringify(jsonObj);
+
+        console.log(json);
+
+    } else if ($( this ).attr("id") && $( this ).attr("id").indexOf("day") != -1) {
+
+        var name = $( this ).attr("name");
+        var value = $( this ).val();
+
+        dayObj[name] = value;
+
+    };
+  });
+
+  $( this ).find("p").each(function(){
+
+    var jsonObj = new Object();
+
+    $( this ).find(':input').each(function(){
+
+      name = $( this ).attr("name");
+      value = $( this ).val();
+
+      jsonObj[name] = value;
+
+    });
+
+    jsonObj['skill'] = skill;
+    json = JSON.stringify(jsonObj);
+    console.log(json);
+
+  });
+
+  json = JSON.stringify(dayObj);
+  console.log(json);
+
 });
 
-$.post("/skills/api/skill_create/", json).success(function(json){
-    console.log(json);
-  });
-});
 
 
 /* Utility functions */
-
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
