@@ -6,26 +6,10 @@ $( "form.setup" ).on( "submit", function( event ) {
 
   setToken();
 
-  var skill;
+  postSkill(this);
 
   $( this ).find(':input').each(function(){
-    if (hasId(this) && hasType(this, "skill")) {
-
-        name = $( this ).attr("name");
-        value = $( this ).val();
-
-        skill = value;
-
-        var jsonObj = {};
-        jsonObj[name] = value;
-
-        json = JSON.stringify(jsonObj);
-
-        $.post("/skills/api/skill_create/", json).success(function(json){
-          console.log(json);
-        });
-
-    } else if (hasId(this) && hasType(this, "day")) {
+    if (hasId(this) && hasType(this, "day")) {
 
         var name = $( this ).attr("name");
         var value = $( this ).val();
@@ -34,6 +18,8 @@ $( "form.setup" ).on( "submit", function( event ) {
 
     };
   });
+
+  var skill = $(this).find('#skill').val();
 
   $( this ).find("p").each(function(){
 
@@ -82,6 +68,28 @@ var hasId = function(element) {
 
 var hasType = function(element, type) {
   return $( element ).attr("id").indexOf(type) != -1;
+}
+
+
+function postSkill(element) {
+
+  $( element ).find(':input').each(function(){
+    if (hasId(this) && hasType(this, "skill")) {
+
+        name = $( this ).attr("name");
+        value = $( this ).val();
+
+        var jsonObj = {};
+        jsonObj[name] = value;
+
+        json = JSON.stringify(jsonObj);
+
+        $.post("/skills/api/skill_create/", json).success(function(json){
+          console.log(json);
+        });
+
+    }
+  });
 }
 
 
