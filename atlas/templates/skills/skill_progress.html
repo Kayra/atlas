@@ -2,20 +2,20 @@
 
 {% block content %}
 
-FOR SKILL IN SKILLS
+{% for skill in skills %}
 
-<h2>skill.name<h2>
+    <h2>{{ skill.name }}</h2>
 
-<p>Task completion rate:</p>
+    <p>Task completion rate:</p>
 
-<p>Total time spent learning this skill:</p>
+    <p>Total time spent learning this skill:</p>
 
-<p>Most completed task:</p>
+    <p>Most completed task:</p>
 
-<p>Least completed task:</p>
+    <p>Least completed task:</p>
 
-<a href="">Edit skill.name tasks</a>
+    <a href="{% url 'skills:overview' %}">Edit skill</a>
 
-ENDFOR
+{% endfor %}
 
 {% endblock %}

@@ -20,7 +20,20 @@ def skillProgressView(request):
     # Pull all skills for user
     # Run progress utility methods
     # Return object and pass it to the template to be displayed
-    return render(request, 'skills/skill_progress.html')
+
+    user = request.user
+
+    skills = Skill.objects.filter(user=user)
+
+    tasks = []
+    for skill in skills:
+        skillTasks = Task.objects.filter(skill=skill)
+        for task in skillTasks:
+            tasks.append(task)
+
+    return render(request, 'skills/skill_progress.html', {
+        'skills': skills,
+        })
 
 
 # Pull all tasks for user

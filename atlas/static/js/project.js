@@ -48,6 +48,7 @@ $( "form.overview_task" ).on( "submit", function( event ) {
 
   var skill = $(this).parent().find(".skill_header").text();
   postTask(this, skill, true);
+
   this.reset();
 
 });
@@ -61,10 +62,9 @@ $( "form.overview_skill" ).on( "submit", function( event ) {
 
   setToken();
 
-  postSkill(this);
+  postSkill(this, true);
 
   var skill = $(this).find('#skill').val();
-
   $( this ).find("p").each(function(){
 
     postTask(this, skill);
@@ -87,7 +87,7 @@ var hasType = function(element, type) {
 }
 
 
-function postSkill(element) {
+function postSkill(element, append) {
 
   $( element ).find(':input').each(function(){
     if (hasId(this) && hasType(this, "skill")) {
@@ -102,6 +102,10 @@ function postSkill(element) {
 
         $.post("/skills/api/skill_create/", json).success(function(json){
           console.log(json);
+
+          if (append) {
+            location.reload();
+          }
         });
 
     }
