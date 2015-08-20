@@ -1,25 +1,48 @@
 
 
 def completionRate(tasks):
-    # (Total completed / Total listed) * 100
-    pass
+
+    totalCompleted = 0
+    totalListed = 0
+
+    for task in tasks:
+        totalCompleted += task.times_completed
+        totalListed += task.times_listed
+
+    try:
+        return (totalCompleted/totalListed) * 100
+
+    except ZeroDivisionError:
+        return 0
 
 
 def totalTime(tasks):
-    # For each task:
-    # completion time * times completed
-    pass
+
+    totalTime = 0
+
+    for task in tasks:
+        totalTime += task.times_completed * tasks.completion_time
+
+    return totalTime
 
 
 def mostCompleted(tasks):
-    # Make dictionary of task:completion rate
-    # Find highest completion rate
-    # Return task associated
-    pass
+
+    highest = tasks[0]
+
+    for task in tasks:
+        if highest.times_completed < ((task.times_completed/task.times_listed) * 100):
+            highest = task
+
+    return highest.name
 
 
-def leastCompleted():
-    # Make dictionary of task:completion rate
-    # Find lowest completion rate
-    # Return task associated
-    pass
+def leastCompleted(tasks):
+
+    lowest = tasks[0]
+
+    for task in tasks:
+        if lowest.times_completed > ((task.times_completed/task.times_listed) * 100):
+            lowest = task
+
+    return lowest.name
