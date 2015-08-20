@@ -55,6 +55,18 @@ $( "form.overview_skill" ).on( "submit", function( event ) {
 
   event.preventDefault();
 
+  setToken();
+
+  postSkill(this);
+
+  var skill = $(this).find('#skill').val();
+
+  $( this ).find("p").each(function(){
+
+    postTask(this, skill);
+
+  });
+
 });
 
 
