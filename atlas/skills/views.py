@@ -11,7 +11,6 @@ from rest_framework.response import Response
 from .serializers import SkillSerializer, TaskSerializer, DaysSerializer
 
 from .models import Skill, Task, Days
-from .forms import SkillForm
 
 
 @login_required
@@ -24,20 +23,36 @@ def skillProgressView(request):
     return render(request, 'skills/skill_progress.html')
 
 
+# Pull all tasks for user
+# Pull all skills for user
+# Pass them to the template to be displayed
 @login_required
 def skillOverview(request):
 
-    # Pull all tasks for user
-    # Pull all skills for user
-    # Pass them to the template to be displayed
-    return render(request, 'skills/skill_overview.html')
+    user = request.user
+
+    skills = Skill.objects.filter(user=user)
+
+    tasks = []
+    for skill in skills:
+        skillTasks = Task.objects.filter(skill=skill)
+        for task in skillTasks:
+            tasks.append(task)
+
+    days = Days.objects.get(user=user)
+
+    return render(request, 'skills/skill_overview.html', {
+        'skills': skills,
+        'tasks': tasks,
+        'days': days,
+    })
 
 
 @login_required
 def skillSetupView(request):
 
     """
-    Save one skill, and multiple tasks for one user
+    Render the page that will allow the user to save one skill, multiple tasks and all the days. If the user has already registered a skill, redirect them to the overview page.
     """
 
     currentUser = request.user

@@ -2,27 +2,70 @@
 
 {% block content %}
 
-FOR SKILL IN SKILLS
+{% csrf_token %}
 
-SKILL NAME
-<table>
-    FOR TASK IN SKILL
-    <tr>
-        <td>TASK NAME</td>
-        <td>COMPLETION TIME</td>
-    </tr>
-    ENDFOR
-    <tr>
-        <td>TASK NAME FORM ENTRY</td>
-        <td>COMPLETION TIME FORM ENTRY</td>
-    </tr>
-    Plus sign symbol to add more rows
-</table>
-ENDFOR
+{% for skill in skills %}
+
+    <h2>{{ skill.name }}</h2>
+
+    <table>
+        {% for task in tasks %}
+            {% if task.skill == skill %}
+                <tr>
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.completion_time|time:'H:i' }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        <tr>
+            <form method='POST' action='' class="overview_task">
+                <p>
+                <label for="task_name_1">Task name:</label>
+                <input id="task_name_1" maxlength="255" name="name" type="text">
+
+                <label for="task_time_1">Completion time:</label>
+                <input id="task_time_1" name="completion_time" type="time">
+                </p>
+                <input type="submit" value="Add">
+            </form>
+        </tr>
+        Plus sign symbol to add more rows
+    </table>
+
+{% endfor %}
 
 <p>Add a new skill</p>
 
-ADD NEW SKILL FORM
+<form method='POST' action='' class="overview_skill">
+    <label for="skill">Skill name:</label>
+    <input id="skill" maxlength="255" name="name" type="text">
+
+    <p>
+    <label for="task_name_1">Task name:</label>
+    <input id="task_name_1" maxlength="255" name="name" type="text">
+
+    <label for="task_time_1">Completion time:</label>
+    <input id="task_time_1" name="completion_time" type="time">
+    </p>
+
+    <p>
+    <label for="task_name_2">Task name:</label>
+    <input id="task_name_2" maxlength="255" name="name" type="text">
+
+    <label for="task_time_2">Completion time:</label>
+    <input id="task_name_2" name="completion_time" type="time">
+    </p>
+
+    <p>
+    <label for="task_name_3">Task name:</label>
+    <input id="task_name_3" maxlength="255" name="name" type="text">
+
+    <label for="task_time_3">Completion time:</label>
+    <input id="task_name_3" name="completion_time" type="time">
+    </p>
+
+    <input type="submit" value="Add">
+</form>
 
 <p>Availability</p>
 <table>
@@ -36,13 +79,13 @@ ADD NEW SKILL FORM
         <td>Sun</td>
     </tr>
     <tr>
-        <td>Mon.time</td>
-        <td>Tues.time</td>
-        <td>Weds.time</td>
-        <td>Thurs.time</td>
-        <td>Fri.time</td>
-        <td>Sat.time</td>
-        <td>Sun.time</td>
+        <td>{{ days.monday|time:'H:i' }}</td>
+        <td>{{ days.tuesday|time:'H:i' }}</td>
+        <td>{{ days.wednesday|time:'H:i' }}</td>
+        <td>{{ days.thursday|time:'H:i' }}</td>
+        <td>{{ days.friday|time:'H:i' }}</td>
+        <td>{{ days.saturday|time:'H:i' }}</td>
+        <td>{{ days.sunday|time:'H:i' }}</td>
     </tr>
 </table>
 
