@@ -34,7 +34,9 @@ $( "form.setup" ).on( "submit", function( event ) {
 
 });
 
+
 /* Overview form handlers */
+
 
 // Existing skill task handler
 
@@ -44,10 +46,12 @@ $( "form.overview_task" ).on( "submit", function( event ) {
 
   setToken();
 
-  skill = $(this).parent().find(".skill_header").text();
-  postTask(this, skill);
+  var skill = $(this).parent().find(".skill_header").text();
+  postTask(this, skill, true);
+  this.reset();
 
 });
+
 
 // New skill handler
 
@@ -105,7 +109,7 @@ function postSkill(element) {
 }
 
 
-function postTask(element, skill) {
+function postTask(element, skill, append) {
 
   var jsonObj = {};
 
@@ -123,9 +127,18 @@ function postTask(element, skill) {
 
   jsonObj['skill'] = skill;
   json = JSON.stringify(jsonObj);
-  console.log(json);
+
   $.post("/skills/api/task_create/", json).success(function(json){
     console.log(json);
+
+    // If the form is on the overview page, append a new row to the current skill display table
+    if (append) {
+
+      var row =  "<tr><td>" + jsonObj["name"] + "</td><td>" + jsonObj["completion_time"] + "</td></tr>";
+
+      $( element ).parent().find("table").append(row);
+    }
+
   });
 
 }
