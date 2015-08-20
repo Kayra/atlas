@@ -15,26 +15,24 @@ from .models import Skill, Task, Days
 from .progress import *
 
 
+# Pull all tasks for user
+# Pull all skills for user
+# Run progress utility methods
+# Return object and pass it to the template to be displayed
 @login_required
 def skillProgressView(request):
-
-    # Pull all tasks for user
-    # Pull all skills for user
-    # Run progress utility methods
-    # Return object and pass it to the template to be displayed
 
     user = request.user
 
     skills = Skill.objects.filter(user=user)
+    skillStats = []
 
-    tasks = []
     for skill in skills:
-        skillTasks = Task.objects.filter(skill=skill)
-        for task in skillTasks:
-            tasks.append(task)
+        tasks = Task.objects.filter(skill=skill)
+        skillStats.append(Progress(tasks))
 
     return render(request, 'skills/skill_progress.html', {
-        'skills': skills,
+        'skills': skillStats,
         })
 
 

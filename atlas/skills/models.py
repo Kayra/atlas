@@ -19,7 +19,7 @@ class Skill(models.Model):
 class Task(models.Model):
 
     name                = models.CharField("Task name", max_length=255)
-    completion_time     = models.TimeField()
+    completion_time     = models.DurationField()
     times_listed        = models.IntegerField(default=0)
     times_completed     = models.IntegerField(default=0)
 

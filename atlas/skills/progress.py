@@ -1,48 +1,56 @@
+from datetime import time
 
 
-def completionRate(tasks):
+class Progress:
 
-    totalCompleted = 0
-    totalListed = 0
+    def completionRate(self, tasks):
 
-    for task in tasks:
-        totalCompleted += task.times_completed
-        totalListed += task.times_listed
+        totalCompleted = 0
+        totalListed = 0
 
-    try:
-        return (totalCompleted/totalListed) * 100
+        for task in tasks:
+            totalCompleted += task.times_completed
+            totalListed += task.times_listed
 
-    except ZeroDivisionError:
-        return 0
+        try:
+            return (totalCompleted/totalListed) * 100
 
+        except ZeroDivisionError:
+            return 0
 
-def totalTime(tasks):
+    def totalTime(self, tasks):
 
-    totalTime = 0
+        totalTime = 0
 
-    for task in tasks:
-        totalTime += task.times_completed * tasks.completion_time
+        for task in tasks:
+            print type(task.completion_time)
+            totalTime += time(seconds=task.times_completed * task.completion_time.total_seconds())
 
-    return totalTime
+        return totalTime
 
+    def mostCompleted(self, tasks):
 
-def mostCompleted(tasks):
+        highest = tasks[0]
 
-    highest = tasks[0]
+        for task in tasks:
+            if highest.times_completed < ((task.times_completed/task.times_listed) * 100):
+                highest = task
 
-    for task in tasks:
-        if highest.times_completed < ((task.times_completed/task.times_listed) * 100):
-            highest = task
+        return highest.name
 
-    return highest.name
+    def leastCompleted(self, tasks):
 
+        lowest = tasks[0]
 
-def leastCompleted(tasks):
+        for task in tasks:
+            if lowest.times_completed > ((task.times_completed/task.times_listed) * 100):
+                lowest = task
 
-    lowest = tasks[0]
+        return lowest.name
 
-    for task in tasks:
-        if lowest.times_completed > ((task.times_completed/task.times_listed) * 100):
-            lowest = task
-
-    return lowest.name
+    def __init__(self, tasks):
+        self.completionRate = self.completionRate(tasks)
+        self.totalTime = self.totalTime(tasks)
+        self.mostCompleted = self.mostCompleted(tasks)
+        self.leastCompleted = self.leastCompleted(tasks)
+        self.skill = tasks[0].skill
