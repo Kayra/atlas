@@ -4,19 +4,7 @@ var dayObj = new Object();
 
 $( "form.setup" ).on( "submit", function( event ) {
 
-  var csrftoken = getCookie('csrftoken');
-
-  $.ajaxSetup({
-      contentType: "application/json; charset=utf-8",
-      beforeSend: function(xhr, settings) {
-          if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
-              // Send the token to same-origin, relative URLs only.
-              // Send the token only if the method warrants CSRF protection
-              // Using the CSRFToken value acquired earlier
-              xhr.setRequestHeader("X-CSRFToken", csrftoken);
-          }
-      }
-  });
+  setToken();
 
   var skill;
 
@@ -68,7 +56,7 @@ $( "form.overview_task" ).on( "submit", function( event ) {
 
   event.preventDefault();
 
-  tokenSet();
+  setToken();
 
   skill = $(this).parent().find(".skill_header").text();
   postTask(this, skill);
@@ -81,35 +69,21 @@ $( "form.overview_skill" ).on( "submit", function( event ) {
 
   event.preventDefault();
 
-
 });
+
 
 /* Utility functions */
 
-function tokenSet() {
-
-  var csrftoken = getCookie('csrftoken');
-
-  $.ajaxSetup({
-      contentType: "application/json; charset=utf-8",
-      beforeSend: function(xhr, settings) {
-          if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
-              // Send the token to same-origin, relative URLs only.
-              // Send the token only if the method warrants CSRF protection
-              // Using the CSRFToken value acquired earlier
-              xhr.setRequestHeader("X-CSRFToken", csrftoken);
-          }
-      }
-  });
-}
 
 var hasId = function(element) {
   return !!$( element ).attr("id");
 };
 
+
 var hasType = function(element, type) {
   return $( element ).attr("id").indexOf(type) != -1;
 }
+
 
 function postTask(element, skill) {
 
@@ -136,6 +110,25 @@ function postTask(element, skill) {
 
 }
 
+
+function setToken() {
+
+  var csrftoken = getCookie('csrftoken');
+
+  $.ajaxSetup({
+      contentType: "application/json; charset=utf-8",
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+              // Send the token to same-origin, relative URLs only.
+              // Send the token only if the method warrants CSRF protection
+              // Using the CSRFToken value acquired earlier
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+  });
+}
+
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -152,10 +145,12 @@ function getCookie(name) {
     return cookieValue;
 }
 
+
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+
 
 function sameOrigin(url) {
     // test that a given url is a same-origin URL
@@ -170,6 +165,7 @@ function sameOrigin(url) {
         // or any other URL that isn't scheme relative or absolute i.e relative.
         !(/^(\/\/|http:|https:).*/.test(url));
 }
+
 
 $.fn.serializeObject = function()
 {
