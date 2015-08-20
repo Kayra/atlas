@@ -12,6 +12,8 @@ from .serializers import SkillSerializer, TaskSerializer, DaysSerializer
 
 from .models import Skill, Task, Days
 
+from .progress import *
+
 
 @login_required
 def skillProgressView(request):
