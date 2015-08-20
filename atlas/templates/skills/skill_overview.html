@@ -2,38 +2,39 @@
 
 {% block content %}
 
-{% csrf_token %}
-
 {% for skill in skills %}
+    <div class="skill">
+        <h2 class="skill_header">{{ skill.name }}</h2>
 
-    <h2>{{ skill.name }}</h2>
+        <table>
+            {% for task in tasks %}
+                {% if task.skill == skill %}
+                    <tr>
+                        <td>{{ task.name }}</td>
+                        <td>{{ task.completion_time|time:'H:i' }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
 
-    <table>
-        {% for task in tasks %}
-            {% if task.skill == skill %}
-                <tr>
-                    <td>{{ task.name }}</td>
-                    <td>{{ task.completion_time|time:'H:i' }}</td>
-                </tr>
-            {% endif %}
-        {% endfor %}
-    </table>
+        <form method='POST' action='' class="overview_task">
+            {% csrf_token %}
 
-    <form method='POST' action='' class="overview_task">
-        <label for="task_name_1">Task name:</label>
-        <input id="task_name_1" maxlength="255" name="name" type="text">
+            <label for="task_name">Task name:</label>
+            <input id="task_name" maxlength="255" name="name" type="text">
 
-        <label for="task_time_1">Completion time:</label>
-        <input id="task_time_1" name="completion_time" type="time">
+            <label for="task_time">Completion time:</label>
+            <input id="task_time" name="completion_time" type="time">
 
-        <input type="submit" value="Add">
-    </form>
-
+            <input type="submit" value="Add">
+        </form>
+    </div>
 {% endfor %}
 
 <p>Add a new skill</p>
 
 <form method='POST' action='' class="overview_skill">
+    {% csrf_token %}
     <label for="skill">Skill name:</label>
     <input id="skill" maxlength="255" name="name" type="text">
 

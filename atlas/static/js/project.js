@@ -1,10 +1,8 @@
-/* Loop through set up form and send the data to appropirate apis */
+/* Setup form handler */
 
 var dayObj = new Object();
 
 $( "form.setup" ).on( "submit", function( event ) {
-
-  event.preventDefault();
 
   var csrftoken = getCookie('csrftoken');
 
@@ -21,14 +19,6 @@ $( "form.setup" ).on( "submit", function( event ) {
   });
 
   var skill;
-
-  var hasId = function(element) {
-    return !!$( element ).attr("id");
-  };
-
-  var hasType = function(element, type) {
-    return $( element ).attr("id").indexOf(type) != -1;
-  }
 
   $( this ).find(':input').each(function(){
     if (hasId(this) && hasType(this, "skill")) {
@@ -59,25 +49,7 @@ $( "form.setup" ).on( "submit", function( event ) {
 
   $( this ).find("p").each(function(){
 
-    var jsonObj = {};
-
-    $( this ).find(':input').each(function(){
-
-      if (hasId(this) && hasType(this, "task")) {
-
-        name = $( this ).attr("name");
-        value = $( this ).val();
-
-        jsonObj[name] = value;
-
-      }
-    });
-
-    jsonObj['skill'] = skill;
-    json = JSON.stringify(jsonObj);
-    $.post("/skills/api/task_create/", json).success(function(json){
-      console.log(json);
-    });
+    postTask(this, skill);
 
   });
 
@@ -88,9 +60,81 @@ $( "form.setup" ).on( "submit", function( event ) {
 
 });
 
+/* Overview form handlers */
 
+// Existing skill task handler
+
+$( "form.overview_task" ).on( "submit", function( event ) {
+
+  event.preventDefault();
+
+  tokenSet();
+
+  skill = $(this).parent().find(".skill_header").text();
+  postTask(this, skill);
+
+});
+
+// New skill handler
+
+$( "form.overview_skill" ).on( "submit", function( event ) {
+
+  event.preventDefault();
+
+
+});
 
 /* Utility functions */
+
+function tokenSet() {
+
+  var csrftoken = getCookie('csrftoken');
+
+  $.ajaxSetup({
+      contentType: "application/json; charset=utf-8",
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+              // Send the token to same-origin, relative URLs only.
+              // Send the token only if the method warrants CSRF protection
+              // Using the CSRFToken value acquired earlier
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+  });
+}
+
+var hasId = function(element) {
+  return !!$( element ).attr("id");
+};
+
+var hasType = function(element, type) {
+  return $( element ).attr("id").indexOf(type) != -1;
+}
+
+function postTask(element, skill) {
+
+  var jsonObj = {};
+
+  $( element ).find(':input').each(function(){
+
+    if (hasId(this) && hasType(this, "task")) {
+
+      name = $( this ).attr("name");
+      value = $( this ).val();
+
+      jsonObj[name] = value;
+
+    }
+  });
+
+  jsonObj['skill'] = skill;
+  json = JSON.stringify(jsonObj);
+  console.log(json);
+  $.post("/skills/api/task_create/", json).success(function(json){
+    console.log(json);
+  });
+
+}
 
 function getCookie(name) {
     var cookieValue = null;
