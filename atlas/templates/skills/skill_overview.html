@@ -17,20 +17,17 @@
                 </tr>
             {% endif %}
         {% endfor %}
-        <tr>
-            <form method='POST' action='' class="overview_task">
-                <p>
-                <label for="task_name_1">Task name:</label>
-                <input id="task_name_1" maxlength="255" name="name" type="text">
-
-                <label for="task_time_1">Completion time:</label>
-                <input id="task_time_1" name="completion_time" type="time">
-                </p>
-                <input type="submit" value="Add">
-            </form>
-        </tr>
-        Plus sign symbol to add more rows
     </table>
+
+    <form method='POST' action='' class="overview_task">
+        <label for="task_name_1">Task name:</label>
+        <input id="task_name_1" maxlength="255" name="name" type="text">
+
+        <label for="task_time_1">Completion time:</label>
+        <input id="task_time_1" name="completion_time" type="time">
+
+        <input type="submit" value="Add">
+    </form>
 
 {% endfor %}
 
