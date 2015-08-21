@@ -4,15 +4,15 @@
 
 {% for skill in skills %}
 
-    <h2>{{ skill.skill.name }}</h2>
+    <h2>{{ skill.skillName }}</h2>
 
-    <p>Task completion rate:</p>
+    <p>Task completion rate: {{ skill.completionRate|floatformat:0 }}%</p>
 
-    <p>Total time spent learning this skill:</p>
+    <p>Total time spent learning this skill: {{ skill.totalTime|floatformat:0  }} minutes</p>
 
-    <p>Most completed task:</p>
+    <p>Most completed task: {{ skill.mostCompleted }}</p>
 
-    <p>Least completed task:</p>
+    <p>Least completed task: {{ skill.leastCompleted }}</p>
 
     <a href="{% url 'skills:overview' %}">Edit skill</a>
 

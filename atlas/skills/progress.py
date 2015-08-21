@@ -1,4 +1,5 @@
-from datetime import time
+from __future__ import division
+from datetime import datetime, date
 
 
 class Progress:
@@ -23,8 +24,14 @@ class Progress:
         totalTime = 0
 
         for task in tasks:
-            print type(task.completion_time)
-            totalTime += time(seconds=task.times_completed * task.completion_time.total_seconds())
+
+            timeZero = datetime.now().time().replace(hour=0, minute=0, second=0, microsecond=0)
+
+            seconds = datetime.combine(date.today(), task.completion_time) - datetime.combine(date.today(), timeZero)
+
+            minutes = seconds.seconds / 60
+
+            totalTime += task.times_completed * minutes
 
         return totalTime
 
@@ -33,8 +40,12 @@ class Progress:
         highest = tasks[0]
 
         for task in tasks:
-            if highest.times_completed < ((task.times_completed/task.times_listed) * 100):
+
+            if task.times_completed > 0 and highest.times_completed < ((task.times_completed/task.times_listed) * 100):
                 highest = task
+
+            elif highest.times_completed == 0:
+                highest.name = "None"
 
         return highest.name
 
@@ -43,8 +54,12 @@ class Progress:
         lowest = tasks[0]
 
         for task in tasks:
-            if lowest.times_completed > ((task.times_completed/task.times_listed) * 100):
+
+            if task.times_completed > 0 and lowest.times_completed > ((task.times_completed/task.times_listed) * 100):
                 lowest = task
+
+            elif lowest.times_completed == 0:
+                lowest.name = "None"
 
         return lowest.name
 
@@ -53,4 +68,4 @@ class Progress:
         self.totalTime = self.totalTime(tasks)
         self.mostCompleted = self.mostCompleted(tasks)
         self.leastCompleted = self.leastCompleted(tasks)
-        self.skill = tasks[0].skill
+        self.skillName = tasks[0].skill

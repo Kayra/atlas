@@ -124,6 +124,10 @@ function postTask(element, skill, append) {
       name = $( this ).attr("name");
       value = $( this ).val();
 
+      if (name == "completion_time") {
+        value = value + ":00";
+      }
+
       jsonObj[name] = value;
 
     }
@@ -138,9 +142,10 @@ function postTask(element, skill, append) {
     // If the form is on the overview page, append a new row to the current skill display table
     if (append) {
 
-      var row =  "<tr><td>" + jsonObj["name"] + "</td><td>" + jsonObj["completion_time"] + "</td></tr>";
+      var row =  "<tr><td>" + jsonObj["name"] + "</td><td>" + jsonObj["completion_time"].substring(0,5) + "</td></tr>";
 
       $( element ).parent().find("table").append(row);
+
     }
 
   });
