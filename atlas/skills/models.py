@@ -41,3 +41,20 @@ class Days(models.Model):
     sunday              = models.TimeField()
 
     user                = models.ForeignKey(User)
+
+
+class List(models.Model):
+
+    date                = models.DateTimeField(auto_now_add=True)
+
+    user                = models.ForeignKey(User)
+
+
+class ListTask(models.Model):
+
+    name                = models.CharField("Task name", max_length=255)
+    completion_time     = models.DurationField(default=timedelta())
+    multiplier          = models.IntegerField(default=1)
+    completed           = models.BooleanField(default=False)
+
+    list                = models.ForeignKey(List)
