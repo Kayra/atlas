@@ -12,7 +12,7 @@ $( "form.setup" ).on( "submit", function( event ) {
     if (hasId(this) && hasType(this, "day")) {
 
         var name = $( this ).attr("name");
-        var value = $( this ).val();
+        var value = $( this ).val() + ":00";
 
         dayObj[name] = value;
 

@@ -1,5 +1,6 @@
 from __future__ import division
-from datetime import datetime, date
+
+from .utility import timeToSeconds
 
 
 class Progress:
@@ -25,11 +26,7 @@ class Progress:
 
         for task in tasks:
 
-            timeZero = datetime.now().time().replace(hour=0, minute=0, second=0, microsecond=0)
-
-            seconds = datetime.combine(date.today(), task.completion_time) - datetime.combine(date.today(), timeZero)
-
-            minutes = seconds.seconds / 60
+            minutes = task.completion_time.seconds / 60
 
             totalTime += task.times_completed * minutes
 

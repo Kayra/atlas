@@ -11,7 +11,7 @@
                 {% if task.skill == skill %}
                     <tr>
                         <td>{{ task.name }}</td>
-                        <td>{{ task.completion_time|time:'H:i' }}</td>
+                        <td>{{ task.completion_time }}</td>
                     </tr>
                 {% endif %}
             {% endfor %}
@@ -77,13 +77,13 @@
         <td>Sun</td>
     </tr>
     <tr>
-        <td>{{ days.monday|time:'H:i' }}</td>
-        <td>{{ days.tuesday|time:'H:i' }}</td>
-        <td>{{ days.wednesday|time:'H:i' }}</td>
-        <td>{{ days.thursday|time:'H:i' }}</td>
-        <td>{{ days.friday|time:'H:i' }}</td>
-        <td>{{ days.saturday|time:'H:i' }}</td>
-        <td>{{ days.sunday|time:'H:i' }}</td>
+        <td>{{ days.monday }}</td>
+        <td>{{ days.tuesday }}</td>
+        <td>{{ days.wednesday }}</td>
+        <td>{{ days.thursday }}</td>
+        <td>{{ days.friday }}</td>
+        <td>{{ days.saturday }}</td>
+        <td>{{ days.sunday }}</td>
     </tr>
 </table>
 

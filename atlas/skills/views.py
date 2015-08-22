@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+import datetime
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -13,6 +14,8 @@ from .serializers import SkillSerializer, TaskSerializer, DaysSerializer
 from .models import Skill, Task, Days
 
 from .progress import *
+
+from .list import *
 
 
 # Pull all tasks for user
@@ -44,21 +47,28 @@ def skillOverview(request):
 
     user = request.user
 
-    skills = Skill.objects.filter(user=user)
+    try:
+        # Check if the user already has a skill
+        Skill.objects.filter(user_id=user.id)[0]
 
-    tasks = []
-    for skill in skills:
-        skillTasks = Task.objects.filter(skill=skill)
-        for task in skillTasks:
-            tasks.append(task)
+        skills = Skill.objects.filter(user=user)
 
-    days = Days.objects.get(user=user)
+        tasks = []
+        for skill in skills:
+            skillTasks = Task.objects.filter(skill=skill)
+            for task in skillTasks:
+                tasks.append(task)
 
-    return render(request, 'skills/skill_overview.html', {
-        'skills': skills,
-        'tasks': tasks,
-        'days': days,
-    })
+        days = Days.objects.get(user=user)
+
+        return render(request, 'skills/skill_overview.html', {
+            'skills': skills,
+            'tasks': tasks,
+            'days': days,
+        })
+
+    except IndexError:
+        return redirect('skills:setup')
 
 
 @login_required
@@ -68,11 +78,11 @@ def skillSetupView(request):
     Render the page that will allow the user to save one skill, multiple tasks and all the days. If the user has already registered a skill, redirect them to the overview page.
     """
 
-    currentUser = request.user
+    user = request.user
 
     try:
         # Check if the user already has a skill
-        Skill.objects.filter(user_id=currentUser.id)[0]
+        Skill.objects.filter(user_id=user.id)[0]
         return redirect('skills:overview')
 
     except IndexError:
@@ -81,13 +91,23 @@ def skillSetupView(request):
         return render(request, 'skills/skill_setup.html')
 
 
+# Pull all tasks for user
+# Run list utility methods
+# Return dictionary containing tasks and times to be displayed
 @login_required
 def skillListView(request):
 
-    # Pull all tasks for user
-    # Run list utility methods
-    # Return dictionary containing tasks and times to be displayed
-    return render(request, 'skills/skill_list.html')
+    try:
+        list = List.objects.filter(date=datetime.now())[0]
+        print 'HIT EXISTS'
+
+    except IndexError:
+        print 'HIT DOESNT EXIST'
+        list = createList(request.user)
+
+    return render(request, 'skills/skill_list.html', {
+        'list': list,
+    })
 
 
 # API #########################################################################

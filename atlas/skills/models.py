@@ -32,20 +32,20 @@ class Task(models.Model):
 
 class Days(models.Model):
 
-    monday              = models.TimeField()
-    tuesday             = models.TimeField()
-    wednesday           = models.TimeField()
-    thursday            = models.TimeField()
-    friday              = models.TimeField()
-    saturday            = models.TimeField()
-    sunday              = models.TimeField()
+    monday              = models.DurationField(default=timedelta())
+    tuesday             = models.DurationField(default=timedelta())
+    wednesday           = models.DurationField(default=timedelta())
+    thursday            = models.DurationField(default=timedelta())
+    friday              = models.DurationField(default=timedelta())
+    saturday            = models.DurationField(default=timedelta())
+    sunday              = models.DurationField(default=timedelta())
 
     user                = models.ForeignKey(User)
 
 
 class List(models.Model):
 
-    date                = models.DateTimeField(auto_now_add=True)
+    date                = models.DateField(auto_now_add=True)
 
     user                = models.ForeignKey(User)
 

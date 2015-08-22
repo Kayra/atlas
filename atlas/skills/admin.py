@@ -2,6 +2,6 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.contrib import admin
-from .models import Skill, Task, Days
+from .models import Skill, Task, Days, List, ListTask
 
-admin.register(Skill, Task, Days)(admin.ModelAdmin)
+admin.register(Skill, Task, Days, List, ListTask)(admin.ModelAdmin)
