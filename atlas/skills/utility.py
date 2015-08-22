@@ -1,10 +1,14 @@
-from datetime import datetime, date
+from .models import Task, Skill
 
 
-def timeToSeconds(time):
+def allTasks(user):
 
-    timeZero = datetime.now().time().replace(hour=0, minute=0, second=0, microsecond=0)
+    skills = Skill.objects.filter(user=user)
 
-    seconds = datetime.combine(date.today(), time) - datetime.combine(date.today(), timeZero)
+    tasks = []
+    for skill in skills:
+        skillTasks = Task.objects.filter(skill=skill)
+        for task in skillTasks:
+            tasks.append(task)
 
-    return seconds.seconds
+    return tasks

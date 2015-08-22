@@ -1,7 +1,5 @@
 from __future__ import division
 
-from .utility import timeToSeconds
-
 
 class Progress:
 

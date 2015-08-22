@@ -13,6 +13,8 @@ from .serializers import SkillSerializer, TaskSerializer, DaysSerializer
 
 from .models import Skill, Task, Days
 
+from .utility import allTasks
+
 from .progress import *
 
 from .list import *
@@ -53,11 +55,7 @@ def skillOverview(request):
 
         skills = Skill.objects.filter(user=user)
 
-        tasks = []
-        for skill in skills:
-            skillTasks = Task.objects.filter(skill=skill)
-            for task in skillTasks:
-                tasks.append(task)
+        tasks = allTasks(user)
 
         days = Days.objects.get(user=user)
 
