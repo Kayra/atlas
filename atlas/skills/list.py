@@ -2,7 +2,7 @@ from datetime import datetime
 import time
 import random
 
-from .models import Skill, Task, Days, List, ListTask
+from .models import Days, List, ListTask
 
 from .utility import allTasks
 
@@ -21,33 +21,35 @@ def generateTasks(user, list):
 
     minutesToday = getattr(days, today).seconds / 60
     minutes = 0
-
+    print minutesToday
     tasks = allTasks(user)
     shortestTask = tasks[0].completion_time.seconds / 60
 
-    # timeOut = time.time() + 0.1
+    currentPosition = 1
     # If a task can still be added to today's list
-    while shortestTask + minutes < minutesToday:
+    while (shortestTask + minutes) < minutesToday:
 
         random.shuffle(tasks)
         for task in tasks:
 
             taskMinutes = task.completion_time.seconds / 60
 
+            # If today's minutes have been filled while still in the loop, break it
+            if (taskMinutes + minutes) > minutesToday:
+                break
+
             if taskMinutes < shortestTask:
                 shortestTask = taskMinutes
 
             try:
-                listTask = ListTask.objects.get(name=task.name, list__user=user, list__date=datetime.now())
-                listTask.multiplier += 1
+                listTask = ListTask.objects.get(name=task.name, position=currentPosition, list__user=user, list__date=datetime.now())
                 listTask.save()
+                currentPosition += 1
 
             except ListTask.DoesNotExist:
-                listTask = ListTask(name=task.name, completion_time=task.completion_time, list=list)
+                listTask = ListTask(name=task.name, completion_time=task.completion_time, position=currentPosition, list=list)
                 listTask.save()
+                currentPosition += 1
 
             minutes += taskMinutes
-
-        # if time.time() > timeOut:
-        #     break
-
+        print minutes

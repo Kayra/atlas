@@ -54,7 +54,7 @@ class ListTask(models.Model):
 
     name                = models.CharField("Task name", max_length=255)
     completion_time     = models.DurationField(default=timedelta())
-    multiplier          = models.IntegerField(default=1)
+    position            = models.IntegerField(null=True)
     completed           = models.BooleanField(default=False)
 
     list                = models.ForeignKey(List)

@@ -51,7 +51,7 @@ def skillOverview(request):
 
     try:
         # Check if the user already has a skill
-        Skill.objects.filter(user_id=user.id)[0]
+        Skill.objects.filter(user=user)[0]
 
         skills = Skill.objects.filter(user=user)
 
@@ -96,15 +96,15 @@ def skillSetupView(request):
 def skillListView(request):
 
     try:
-        list = List.objects.filter(date=datetime.now())[0]
-        print 'HIT EXISTS'
+        List.objects.get(date=datetime.now())
+        tasks = ListTask.objects.filter(list__date=datetime.now()).order_by('position')
 
-    except IndexError:
-        print 'HIT DOESNT EXIST'
-        list = createList(request.user)
+    except List.DoesNotExist:
+        createList(request.user)
+        tasks = ListTask.objects.filter(list__date=datetime.now()).order_by('position')
 
     return render(request, 'skills/skill_list.html', {
-        'list': list,
+        'list': tasks,
     })
 
 
