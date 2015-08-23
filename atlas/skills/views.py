@@ -162,8 +162,3 @@ def listTaskComplete(request):
     task.save()
 
     return Response(request.data, status=status.HTTP_201_CREATED)
-
-
-
-
-

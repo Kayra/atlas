@@ -81,26 +81,44 @@ $(".list_task").on('swipe', function(event) {
 
   if (!completed && event.direction === 'left') {
 
-    $(this).find("p").css('text-decoration', 'line-through');
-    $(this).find("p").addClass("completed");
-
-    var task_id = $(this).find("p").attr('id');
-
-    setToken();
-
-    var jsonObj = {};
-    jsonObj['id'] = task_id;
-    jsonObj['completed'] = 'True';
-
-    json = JSON.stringify(jsonObj);
-
-    $.post("/skills/api/listtask_complete/", json).success(function(json){
-      console.log(json);
-    });
+    completeListTask(this);
 
   }
 
 });
+
+$(".list_task").on('click', function() {
+
+  var completed = $(this).find("p").hasClass("completed");
+
+  if (!completed) {
+
+    completeListTask(this);
+
+  }
+
+});
+
+function completeListTask(element) {
+
+  $(element).find("p").css('text-decoration', 'line-through');
+  $(element).find("p").addClass("completed");
+
+  var task_id = $(element).find("p").attr('id');
+
+  setToken();
+
+  var jsonObj = {};
+  jsonObj['id'] = task_id;
+  jsonObj['completed'] = 'True';
+
+  json = JSON.stringify(jsonObj);
+
+  $.post("/skills/api/listtask_complete/", json).success(function(json){
+    console.log(json);
+  });
+
+}
 
 
 /******** Utility functions ********/
