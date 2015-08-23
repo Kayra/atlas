@@ -73,14 +73,20 @@ $( "form.overview_skill" ).on( "submit", function( event ) {
 });
 
 
-/******** List handlers ********/
+/******** List handler ********/
 
 $(".list_task").on('swipe', function(event) {
+
   if(event.direction === 'left') {
+
     $(this).find("p").css('text-decoration', 'line-through');
+    var task_id = $(this).find("p").attr('id');
     var task_name = $(this).find(".task_name").text();
+    console.log(task_id);
     console.log(task_name);
+
   }
+
 });
 
 
