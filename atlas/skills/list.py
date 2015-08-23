@@ -45,9 +45,15 @@ def generateTasks(user, list):
                 listTask.save()
                 currentPosition += 1
 
+                # Increase times listed for task
+                task.times_listed += 1
+
             except ListTask.DoesNotExist:
                 listTask = ListTask(name=task.name, completion_time=task.completion_time, position=currentPosition, list=list)
                 listTask.save()
                 currentPosition += 1
+
+                # Increase times listed for task
+                task.times_listed += 1
 
             minutes += taskMinutes

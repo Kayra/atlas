@@ -123,35 +123,6 @@ def skillCreate(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def skillDetail(request, pk):
-
-    """
-    Retrieve, update or delete a skill.
-    """
-
-    try:
-        skill = Skill.objects.get(pk=pk)
-    except Skill.DoesNotExist:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    if request.method == 'GET':
-        serializer = SkillSerializer(skill)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = SkillSerializer(skill, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        skill.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
 @api_view(['POST'])
 def taskCreate(request):
 
@@ -166,35 +137,6 @@ def taskCreate(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def taskDetail(request, pk):
-
-    """
-    Retrieve, update or delete a task.
-    """
-
-    try:
-        task = Task.objects.get(pk=pk)
-    except Task.DoesNotExist:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    if request.method == 'GET':
-        serializer = TaskSerializer(task)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = TaskSerializer(task, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        task.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
 @api_view(['POST'])
 def daysCreate(request):
 
@@ -206,3 +148,22 @@ def daysCreate(request):
 
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def listTaskComplete(request):
+
+    listTask = ListTask.objects.get(id=request.data['id'])
+    listTask.completed = request.data['completed']
+    listTask.save()
+
+    task = Task.objects.get(name=listTask.name, skill__user=request.user)
+    task.times_completed += 1
+    task.save()
+
+    return Response(request.data, status=status.HTTP_201_CREATED)
+
+
+
+
+

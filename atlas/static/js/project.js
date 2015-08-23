@@ -77,13 +77,26 @@ $( "form.overview_skill" ).on( "submit", function( event ) {
 
 $(".list_task").on('swipe', function(event) {
 
-  if(event.direction === 'left') {
+  var completed = $(this).find("p").hasClass("completed");
+
+  if (!completed && event.direction === 'left') {
 
     $(this).find("p").css('text-decoration', 'line-through');
+    $(this).find("p").addClass("completed");
+
     var task_id = $(this).find("p").attr('id');
-    var task_name = $(this).find(".task_name").text();
-    console.log(task_id);
-    console.log(task_name);
+
+    setToken();
+
+    var jsonObj = {};
+    jsonObj['id'] = task_id;
+    jsonObj['completed'] = 'True';
+
+    json = JSON.stringify(jsonObj);
+
+    $.post("/skills/api/listtask_complete/", json).success(function(json){
+      console.log(json);
+    });
 
   }
 
