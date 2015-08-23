@@ -1,5 +1,4 @@
 from datetime import datetime
-import time
 import random
 
 from .models import Days, List, ListTask
@@ -21,7 +20,7 @@ def generateTasks(user, list):
 
     minutesToday = getattr(days, today).seconds / 60
     minutes = 0
-    print minutesToday
+
     tasks = allTasks(user)
     shortestTask = tasks[0].completion_time.seconds / 60
 
@@ -52,4 +51,3 @@ def generateTasks(user, list):
                 currentPosition += 1
 
             minutes += taskMinutes
-        print minutes

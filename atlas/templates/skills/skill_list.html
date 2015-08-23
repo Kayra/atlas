@@ -4,7 +4,9 @@
 
 {% for task in list %}
 
-    <p>{{ task.name }} - {{ task.completion_time }}</p>
+    <div class="listTask">
+        <p>{{ task.name }} - {{ task.completion_time }}</p>
+    </div>
 
 {% endfor %}
 

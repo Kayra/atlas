@@ -46,14 +46,14 @@
           </button>
           <a class="navbar-brand" href="/">atlas</a>
         </div>
-          
+
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
           </ul>
-        
+
           <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_authenticated %}
               <li><a href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a></li>
@@ -96,8 +96,10 @@
       <!-- Your stuff: Third-party javascript libraries go here -->
 
       <!-- place project specific Javascript in this file -->
+      <script src="{% static 'js/toe.js' %}"></script>
+      <script src="{% static 'js/gestures/swipe.js' %}"></script>
       <script src="{% static 'js/project.js' %}"></script>
     {% endblock javascript %}
   </body>
 </html>
- 
+

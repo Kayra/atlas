@@ -1,4 +1,4 @@
-/* Setup form handler */
+/******** Setup form handler ********/
 
 var dayObj = new Object();
 
@@ -35,8 +35,7 @@ $( "form.setup" ).on( "submit", function( event ) {
 });
 
 
-/* Overview form handlers */
-
+/******** Overview form handlers ********/
 
 // Existing skill task handler
 
@@ -74,7 +73,16 @@ $( "form.overview_skill" ).on( "submit", function( event ) {
 });
 
 
-/* Utility functions */
+/******** List handlers ********/
+
+$(".listTask").on('swipe', function(event) {
+  if(event.direction === 'left') {
+    console.log('hit');
+  }
+});
+
+
+/******** Utility functions ********/
 
 
 var hasId = function(element) {
