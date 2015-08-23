@@ -5,7 +5,7 @@
 {% for task in list %}
 
     <div class="list_task">
-        <p id="{{ task.id }}" {% if task.completed %} class="completed" style="text-decoration: line-through;" {% endif %}><span class="task_name">{{ task.name }}</span> - {{ task.completion_time }}</p>
+        <p id="{{ task.id }}" {% if task.completed %} class="list_task_completed" {% endif %}><span class="task_name">{{ task.name }}</span> - {{ task.completion_time }}</p>
     </div>
 
 {% endfor %}

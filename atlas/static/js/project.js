@@ -77,7 +77,7 @@ $( "form.overview_skill" ).on( "submit", function( event ) {
 
 $(".list_task").on('swipe', function(event) {
 
-  var completed = $(this).find("p").hasClass("completed");
+  var completed = $(this).find("p").hasClass("list_task_completed");
 
   if (!completed && event.direction === 'left') {
 
@@ -89,7 +89,7 @@ $(".list_task").on('swipe', function(event) {
 
 $(".list_task").on('click', function() {
 
-  var completed = $(this).find("p").hasClass("completed");
+  var completed = $(this).find("p").hasClass("list_task_completed");
 
   if (!completed) {
 
@@ -98,27 +98,6 @@ $(".list_task").on('click', function() {
   }
 
 });
-
-function completeListTask(element) {
-
-  $(element).find("p").css('text-decoration', 'line-through');
-  $(element).find("p").addClass("completed");
-
-  var task_id = $(element).find("p").attr('id');
-
-  setToken();
-
-  var jsonObj = {};
-  jsonObj['id'] = task_id;
-  jsonObj['completed'] = 'True';
-
-  json = JSON.stringify(jsonObj);
-
-  $.post("/skills/api/listtask_complete/", json).success(function(json){
-    console.log(json);
-  });
-
-}
 
 
 /******** Utility functions ********/
@@ -195,6 +174,28 @@ function postTask(element, skill, append) {
 
     }
 
+  });
+
+}
+
+
+function completeListTask(element) {
+
+  $(element).find("p").css('text-decoration', 'line-through');
+  $(element).find("p").addClass("list_task_completed");
+
+  var task_id = $(element).find("p").attr('id');
+
+  setToken();
+
+  var jsonObj = {};
+  jsonObj['id'] = task_id;
+  jsonObj['completed'] = 'True';
+
+  json = JSON.stringify(jsonObj);
+
+  $.post("/skills/api/listtask_complete/", json).success(function(json){
+    console.log(json);
   });
 
 }

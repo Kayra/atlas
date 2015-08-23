@@ -32,3 +32,22 @@
   background-color: #f2dede;
   border-color: #eed3d7;
 }
+
+.list_task {
+  width: 100%;
+  background-color: #D3D3D4;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-bottom: 7px;
+  margin-top: 7px;
+}
+
+.list_task p {
+  margin: 0;
+  font-size: 1.4em;
+}
+
+.list_task_completed {
+  text-decoration: line-through;
+}
+
