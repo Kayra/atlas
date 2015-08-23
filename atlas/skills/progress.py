@@ -36,7 +36,7 @@ class Progress:
 
         for task in tasks:
 
-            if self.taskCompletedCheck(task) and highest.times_completed < ((task.times_completed/task.times_listed) * 100):
+            if self.taskCompletedListedCheck(task) and highest.times_completed < ((task.times_completed/task.times_listed) * 100):
                 highest = task
 
             elif highest.times_completed == 0:
@@ -50,7 +50,7 @@ class Progress:
 
         for task in tasks:
 
-            if self.taskCompletedCheck(task) and lowest.times_completed > ((task.times_completed/task.times_listed) * 100):
+            if self.taskCompletedListedCheck(task) and lowest.times_completed > ((task.times_completed/task.times_listed) * 100):
                 lowest = task
 
             elif lowest.times_completed == 0:
@@ -58,7 +58,7 @@ class Progress:
 
         return lowest.name
 
-    def taskCompletedCheck(self, task):
+    def taskCompletedListedCheck(self, task):
         return task.times_completed > 0 and task.times_listed > 0
 
     def __init__(self, tasks):
