@@ -103,10 +103,21 @@ $( "table.days_times" ).on( "submit", "form.day_form", function(event) {
 
   event.preventDefault();
 
-  var day = $(this).find("input").attr('id');
+  var day = $(this).find("input").attr('id').toLowerCase();
   var time = $(this).find("input").val() + ":00";
 
+  setToken();
 
+  var jsonObj = {};
+
+  jsonObj['day'] = day;
+  jsonObj['time'] = time;
+
+  json = JSON.stringify(jsonObj);
+
+  $.post("/skills/api/days_update/", json).success(function(json){
+    console.log(json);
+  });
 
 });
 

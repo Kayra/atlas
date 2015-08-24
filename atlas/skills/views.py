@@ -162,3 +162,13 @@ def listTaskComplete(request):
     task.save()
 
     return Response(request.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['POST'])
+def daysUpdate(request):
+
+    days = Days.objects.get(user=request.user)
+    setattr(days, request.data['day'], request.data['time'])
+    days.save()
+
+    return Response(request.data, status=status.HTTP_201_CREATED)

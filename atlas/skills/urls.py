@@ -32,6 +32,10 @@ urlpatterns = [
     # URL pattern to create a days
     url(r'^api/days_create/$', views.daysCreate, name='days_create'),
 
+    # URL pattern to update a day
+    url(r'^api/days_update/$', views.daysUpdate, name='days_update'),
+
     # URL pattern to complete a listTask
     url(r'^api/listtask_complete/$', views.listTaskComplete, name='listTask_complete'),
+
 ]
