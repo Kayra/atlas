@@ -47,7 +47,24 @@
   font-size: 1.4em;
 }
 
-.list_task_completed {
-  text-decoration: line-through;
+[tooltip]:before {
+  position : absolute;
+  content : attr(tooltip);
+  opacity : 0;
+
+  transition: all 0.15s ease;
+  padding: 10px;
+  color: #333;
+  border-radius: 10px;
+  box-shadow: 2px 2px 1px silver;
 }
+
+[tooltip]:hover:before {
+    opacity : 1;
+
+    background: yellow;
+    margin-top: -50px;
+    margin-left: 20px;
+}
+
 

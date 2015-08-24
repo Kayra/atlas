@@ -26,14 +26,14 @@
             <label for="task_time">Completion time:</label>
             <input id="task_time" name="completion_time" type="time">
 
-            <input type="submit" value="Add">
+            <input type="submit" value="Add Task">
         </form>
     </div>
 {% endfor %}
 
 <p>Add a new skill</p>
 
-<form method='POST' action='' class="overview_skill">
+<form method='POST' action='' class='overview_skill'>
     {% csrf_token %}
     <label for="skill">Skill name:</label>
     <input id="skill" maxlength="255" name="name" type="text">
@@ -62,29 +62,33 @@
     <input id="task_name_3" name="completion_time" type="time">
     </p>
 
-    <input type="submit" value="Add">
+    <input type="submit" value="Add Skill">
 </form>
 
 <p>Availability</p>
-<table>
-    <tr>
-        <td>Mon</td>
-        <td>Tues</td>
-        <td>Weds</td>
-        <td>Thurs</td>
-        <td>Fri</td>
-        <td>Sat</td>
-        <td>Sun</td>
-    </tr>
-    <tr>
-        <td>{{ days.monday }}</td>
-        <td>{{ days.tuesday }}</td>
-        <td>{{ days.wednesday }}</td>
-        <td>{{ days.thursday }}</td>
-        <td>{{ days.friday }}</td>
-        <td>{{ days.saturday }}</td>
-        <td>{{ days.sunday }}</td>
-    </tr>
+<table class="days_times" tooltip="Edit">
+    <thead>
+        <tr class="days">
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wedsday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="times">
+            <td>{{ days.monday }}</td>
+            <td>{{ days.tuesday }}</td>
+            <td>{{ days.wednesday }}</td>
+            <td>{{ days.thursday }}</td>
+            <td>{{ days.friday }}</td>
+            <td>{{ days.saturday }}</td>
+            <td>{{ days.sunday }}</td>
+        </tr>
+    </tbody>
 </table>
 
 {% endblock %}
