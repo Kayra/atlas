@@ -75,29 +75,21 @@ $( "form.overview_skill" ).on( "submit", function( event ) {
 
 // Edit day handler
 
+var clicked = false;
+
 $( ".days th, .times td" ).on( "click", function() {
 
-  var day = $(this).closest('table').find('th').eq($(this).index()).text();
-  var time = $(this).closest('table').find('td').eq($(this).index()).text();
+    if (!clicked) {
+    var day = $(this).closest('table').find('th').eq($(this).index()).text();
+    var time = $(this).closest('table').find('td').eq($(this).index()).text();
 
-  console.log(day);
-  console.log(time.substring(0,4));
+    $(this).replaceWith("<form method='POST' action='' class='day_form'><input id='" + day + "' type='time' value='0" + time.substring(0,4) + "'><input type='submit' value='Save'></form>");
 
-  time = $(this).replaceWith("<form method='POST' action='' class='day_form'><input id='" + day + "' type='time' value='0" + time.substring(0,4) + "'><input type='submit' value='Save'></form>");
-
-  // $( "table.days_times" ).append("<input type='submit' value='Save'></form>");
-
-  // console.log(thing);
-
-  // turn time into form, with time as default
-  // add save button
-  // when save button is clicked, check if time has changed
-  // if not then do nothing -> just go straight to get rid of the save button and form
-  // if changed, make api post to new thing I need to make
-  // replace old time with new on the page
-  // get rid of the save button and the form
+    clicked = true;
+  }
 
 });
+
 
 $( "table.days_times" ).on( "submit", "form.day_form", function(event) {
 
@@ -116,11 +108,14 @@ $( "table.days_times" ).on( "submit", "form.day_form", function(event) {
   json = JSON.stringify(jsonObj);
 
   $.post("/skills/api/days_update/", json).success(function(json){
+
     console.log(json);
+    $("form.day_form").replaceWith("<td>" + time + "</td>");
+    clicked = false;
+
   });
 
 });
-
 
 
 /******** List handler ********/
