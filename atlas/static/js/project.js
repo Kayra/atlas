@@ -1,152 +1,9 @@
-/******** Setup form handler ********/
-
-var dayObj = new Object();
-
-$( "form.setup" ).on( "submit", function( event ) {
-
-  setToken();
-
-  postSkill(this);
-
-  $( this ).find(':input').each(function(){
-    if (hasId(this) && hasType(this, "day")) {
-
-        var name = $( this ).attr("name");
-        var value = $( this ).val() + ":00";
-
-        dayObj[name] = value;
-
-    };
-  });
-
-  var skill = $(this).find('#skill').val();
-
-  $( this ).find("p").each(function(){
-
-    postTask(this, skill);
-
-  });
-
-  json = JSON.stringify(dayObj);
-  $.post("/skills/api/days_create/", json).success(function(json){
-    console.log(json);
-  });
-
-});
-
-
-/******** Overview form handlers ********/
-
-// Existing skill task handler
-
-$( "form.overview_task" ).on( "submit", function( event ) {
-
-  event.preventDefault();
-
-  setToken();
-
-  var skill = $(this).parent().find(".skill_header").text();
-  postTask(this, skill, true);
-
-  this.reset();
-
-});
-
-
-// New skill handler
-
-$( "form.overview_skill" ).on( "submit", function( event ) {
-
-  event.preventDefault();
-
-  setToken();
-
-  postSkill(this, true);
-
-  var skill = $(this).find('#skill').val();
-  $( this ).find("p").each(function(){
-
-    postTask(this, skill);
-
-  });
-
-});
-
-
-// Edit day handler
-
-var clicked = false;
-
-$( ".days th, .times td" ).on( "click", function() {
-
-    if (!clicked) {
-    var day = $(this).closest('table').find('th').eq($(this).index()).text();
-    var time = $(this).closest('table').find('td').eq($(this).index()).text();
-
-    $(this).replaceWith("<form method='POST' action='' class='day_form'><input id='" + day + "' type='time' value='0" + time.substring(0,4) + "'><input type='submit' value='Save'></form>");
-
-    clicked = true;
-  }
-
-});
-
-
-$( "table.days_times" ).on( "submit", "form.day_form", function(event) {
-
-  event.preventDefault();
-
-  var day = $(this).find("input").attr('id').toLowerCase();
-  var time = $(this).find("input").val() + ":00";
-
-  setToken();
-
-  var jsonObj = {};
-
-  jsonObj['day'] = day;
-  jsonObj['time'] = time;
-
-  json = JSON.stringify(jsonObj);
-
-  $.post("/skills/api/days_update/", json).success(function(json){
-
-    console.log(json);
-    $("form.day_form").replaceWith("<td>" + time + "</td>");
-    clicked = false;
-
-  });
-
-});
-
-
-/******** List handler ********/
-
-$(".list_task").on('swipe', function(event) {
-
-  var completed = $(this).find("p").hasClass("list_task_completed");
-
-  if (!completed && event.direction === 'left') {
-
-    completeListTask(this);
-
-  }
-
-});
-
-$(".list_task").on('click', function() {
-
-  var completed = $(this).find("p").hasClass("list_task_completed");
-
-  if (!completed) {
-
-    completeListTask(this);
-
-  }
-
-});
-
+//IIFE
+(function(){
 
 /******** Utility functions ********/
 
+// setToken();
 
 var hasId = function(element) {
   return !!$( element ).attr("id");
@@ -169,7 +26,7 @@ function postSkill(element, append) {
         var jsonObj = {};
         jsonObj[name] = value;
 
-        json = JSON.stringify(jsonObj);
+        var json = JSON.stringify(jsonObj);
 
         $.post("/skills/api/skill_create/", json).success(function(json){
           console.log(json);
@@ -205,7 +62,7 @@ function postTask(element, skill, append) {
   });
 
   jsonObj['skill'] = skill;
-  json = JSON.stringify(jsonObj);
+  var json = JSON.stringify(jsonObj);
 
   $.post("/skills/api/task_create/", json).success(function(json){
     console.log(json);
@@ -237,7 +94,7 @@ function completeListTask(element) {
   jsonObj['id'] = task_id;
   jsonObj['completed'] = 'True';
 
-  json = JSON.stringify(jsonObj);
+  var json = JSON.stringify(jsonObj);
 
   $.post("/skills/api/listtask_complete/", json).success(function(json){
     console.log(json);
@@ -318,3 +175,154 @@ $.fn.serializeObject = function()
    });
    return o;
 };
+
+
+/******** Setup form handler ********/
+
+(function(){
+  var dayObj = {};
+
+  $( "form.setup" ).on( "submit", function( event ) {
+
+    setToken();
+
+    postSkill(this);
+
+    $( this ).find(':input').each(function(){
+      if (hasId(this) && hasType(this, "day")) {
+
+          var name = $( this ).attr("name");
+          var value = $( this ).val() + ":00";
+
+          dayObj[name] = value;
+
+      };
+    });
+
+    var skill = $(this).find('#skill').val();
+
+    $( this ).find("p").each(function(){
+
+      postTask(this, skill);
+
+    });
+
+    json = JSON.stringify(dayObj);
+    $.post("/skills/api/days_create/", json).success(function(json){
+      console.log(json);
+    });
+
+  });
+})();
+
+/******** Overview form handlers ********/
+
+// Existing skill task handler
+
+$( "form.overview_task" ).on( "submit", function( event ) {
+
+  event.preventDefault();
+
+  setToken();
+
+  var skill = $(this).parent().find(".skill_header").text();
+  postTask(this, skill, true);
+
+  this.reset();
+
+});
+
+
+// New skill handler
+
+$( "form.overview_skill" ).on( "submit", function( event ) {
+
+  event.preventDefault();
+
+  setToken();
+
+  postSkill(this, true);
+
+  var skill = $(this).find('#skill').val();
+  $( this ).find("p").each(function(){
+
+    postTask(this, skill);
+
+  });
+
+});
+
+
+// Edit day handler
+
+(function(){
+  var clicked = false;
+
+  $( ".days th, .times td" ).on( "click", function() {
+
+      if (!clicked) {
+      var day = $(this).closest('table').find('th').eq($(this).index()).text();
+      var time = $(this).closest('table').find('td').eq($(this).index()).text();
+
+      $(this).replaceWith("<form method='POST' action='' class='day_form'><input id='" + day + "' type='time' value='0" + time.substring(0,4) + "'><input type='submit' value='Save'></form>");
+
+      clicked = true;
+    }
+
+  });
+})();
+
+$( "table.days_times" ).on( "submit", "form.day_form", function(event) {
+
+  event.preventDefault();
+
+  var day = $(this).find("input").attr('id').toLowerCase();
+  var time = $(this).find("input").val() + ":00";
+
+  setToken();
+
+  var jsonObj = {};
+
+  jsonObj['day'] = day;
+  jsonObj['time'] = time;
+
+  json = JSON.stringify(jsonObj);
+
+  $.post("/skills/api/days_update/", json).success(function(json){
+
+    console.log(json);
+    $("form.day_form").replaceWith("<td>" + time + "</td>");
+    clicked = false;
+
+  });
+
+});
+
+
+/******** List handler ********/
+
+$(".list_task").on('swipe', function(event) {
+
+  var completed = $(this).find("p").hasClass("list_task_completed");
+
+  if (!completed && event.direction === 'left') {
+
+    completeListTask(this);
+
+  }
+
+});
+
+$(".list_task").on('click', function() {
+
+  var completed = $(this).find("p").hasClass("list_task_completed");
+
+  if (!completed) {
+
+    completeListTask(this);
+
+  }
+
+});
+
+})();
