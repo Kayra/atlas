@@ -47,6 +47,10 @@
   font-size: 1.4em;
 }
 
+.list_task_completed {
+  text-decoration: line-through;
+}
+
 [tooltip]:before {
   position : absolute;
   content : attr(tooltip);
@@ -66,5 +70,7 @@
     margin-top: -50px;
     margin-left: 20px;
 }
+
+
 
 

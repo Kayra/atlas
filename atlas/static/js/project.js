@@ -3,8 +3,6 @@
 
 /******** Utility functions ********/
 
-// setToken();
-
 var hasId = function(element) {
   return !!$( element ).attr("id");
 };
