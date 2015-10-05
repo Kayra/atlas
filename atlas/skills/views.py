@@ -20,10 +20,6 @@ from .progress import *
 from .list import *
 
 
-# Pull all tasks for user
-# Pull all skills for user
-# Run progress utility methods
-# Return object and pass it to the template to be displayed
 @login_required
 def skillProgressView(request):
 
@@ -41,9 +37,6 @@ def skillProgressView(request):
         })
 
 
-# Pull all tasks for user
-# Pull all skills for user
-# Pass them to the template to be displayed
 @login_required
 def skillOverview(request):
 
@@ -72,10 +65,6 @@ def skillOverview(request):
 @login_required
 def skillSetupView(request):
 
-    """
-    Render the page that will allow the user to save one skill, multiple tasks and all the days. If the user has already registered a skill, redirect them to the overview page.
-    """
-
     user = request.user
 
     try:
@@ -89,9 +78,6 @@ def skillSetupView(request):
         return render(request, 'skills/skill_setup.html')
 
 
-# Pull all tasks for user
-# Run list utility methods
-# Return dictionary containing tasks and times to be displayed
 @login_required
 def skillListView(request):
 
