@@ -13,10 +13,16 @@
     <h2>How</h2>
     <p>The backend is a Django REST API, and the frontend is generated with Django's templating system. While it may seem redundant to build the application in this way, it was a conscious decision. The reason being that this is a proof of concept, built in a way that is simultaneously forward thinking and the quickest way to technologically solve the problem outlined in the What section. As I use/test the application, I will discover what works and what doesn't, and use this information to refine the app and build out a more feature rich front end (using a fit for purpose front end framework) and a native mobile app. Using an API allows for this extensibility, and using Django's own templating system ensured the quickest and simplest solution.</p>
 
-    <a href="https://github.com/Kayra/atlas"><p>The code for this application can be viewed on github: https://github.com/Kayra/atlas</p></a>
+    <p>The code for this application can be viewed on <a href="https://github.com/Kayra/atlas">github.</a></p>
 
     <h2>Why</h2>
     <p>App stores in every ecosystem are saturated with ToDo apps. Despite this, I was unable to find one that scratched the itch I had. During my time working at a digital agency, my work was streamlined by my project manager, which freed me from the need to organise my time allowing me to focus on my work. I had a strong desire for such a workflow in my spare time, as I had many hobbies; keeping track of what I should be doing in each one to further my competence became tedious. And so, Atlas was born. </p>
+
+
+    <div class="centre">
+    <h2>Get started</h2>
+    <p><a href="{% url 'account_signup' %}">Create an account,</a> <a href="{% url 'skills:overview' %}">then add a skill.</a></p>
+    </div>
 
     <h2>Todo:</h2>
     <ul>

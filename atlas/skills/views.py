@@ -26,15 +26,20 @@ def skillProgressView(request):
     user = request.user
 
     skills = Skill.objects.filter(user=user)
-    skillStats = []
 
-    for skill in skills:
-        tasks = Task.objects.filter(skill=skill)
-        skillStats.append(Progress(tasks))
+    if skills:
+        skillStats = []
 
-    return render(request, 'skills/skill_progress.html', {
-        'skills': skillStats,
-        })
+        for skill in skills:
+            tasks = Task.objects.filter(skill=skill)
+            if tasks:
+                skillStats.append(Progress(tasks))
+
+        return render(request, 'skills/skill_progress.html', {
+            'skills': skillStats,
+            })
+    else:
+        return redirect('skills:setup')
 
 
 @login_required
@@ -86,8 +91,12 @@ def skillListView(request):
         tasks = ListTask.objects.filter(list__date=datetime.now()).order_by('position')
 
     except List.DoesNotExist:
-        createList(request.user)
-        tasks = ListTask.objects.filter(list__date=datetime.now()).order_by('position')
+
+        try:
+            createList(request.user)
+            tasks = ListTask.objects.filter(list__date=datetime.now(), list__user=request.user).order_by('position')
+        except (Days.DoesNotExist, Task.DoesNotExist, Skill.DoesNotExist):
+            return redirect('skills:setup')
 
     return render(request, 'skills/skill_list.html', {
         'list': tasks,

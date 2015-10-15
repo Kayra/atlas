@@ -42,12 +42,18 @@ class Days(models.Model):
 
     user                = models.ForeignKey(User)
 
+    def __unicode__(self):
+        return self.user
+
 
 class List(models.Model):
 
     date                = models.DateField(auto_now_add=True)
 
     user                = models.ForeignKey(User)
+
+    def __unicode__(self):
+        return unicode(self.date)
 
 
 class ListTask(models.Model):
@@ -58,3 +64,7 @@ class ListTask(models.Model):
     completed           = models.BooleanField(default=False)
 
     list                = models.ForeignKey(List)
+
+    def __unicode__(self):
+        return self.name
+
