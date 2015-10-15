@@ -59,7 +59,7 @@ INSTALLED_APPS += ("gunicorn", )
 # ------------------------
 # See: http://django-storages.readthedocs.org/en/latest/index.html
 INSTALLED_APPS += (
-    'storages',
+    # 'storages',
 )
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
